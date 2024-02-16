@@ -1,0 +1,41 @@
+---
+interface Props {
+  title: string;
+  imagePath: string;
+  product: string;
+}
+
+const { title, imagePath, product } = Astro.props;
+
+const isMobile = () => {
+  if (typeof navigator === "undefined") {
+    return false;
+  }
+  const userAgent = navigator.userAgent;
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    userAgent
+  );
+};
+
+const mobileWhatsapp = "api";
+const desktopWhatsapp = "web";
+
+const webApi = isMobile() ? mobileWhatsapp : desktopWhatsapp;
+
+const whatsappLink = `https://${webApi}.whatsapp.com/send?phone=573114012648&text=Hola+${product}`;
+---
+
+<a
+  class="bg-white block rounded-xl border border-blue p-8 shadow-xl transition hover:border-blue-500/10 hover:shadow-blue-500/10"
+  href={whatsappLink}
+  target="_blank"
+>
+  <img src={imagePath} class="m-auto w-72 h-72" />
+
+  <h2 class="mt-4 text-xl font-bold text-black">{title}</h2>
+
+  <p class="mt-1 text-sm text-gray-300">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex ut quo possimus
+    adipisci distinctio alias voluptatum blanditiis laudantium.
+  </p>
+</a>
